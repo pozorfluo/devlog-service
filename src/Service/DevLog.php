@@ -14,13 +14,17 @@ class DevLog
     private static $cloner;
     private static $dumper;
 
-    public function __construct()
+    public function __construct($variable = null, ?string $note = null)
     {
         if (self::$cloner === null) {
             self::$cloner = new VarCloner();
         }
         if (self::$dumper === null) {
             self::$dumper = new HtmlDumper();
+        }
+
+        if($variable !== null) {
+            $this->log($variable, $note);
         }
     }
 
@@ -32,11 +36,19 @@ class DevLog
         return self::$data[$property];
     }
 
-    public function log(string $name, $variable)
+    public function log($variable, ?string $note = null) :self
     {
-        self::$data[$name] = self::$dumper->dump(
+        $dump = self::$dumper->dump(
             self::$cloner->cloneVar($variable), true
         );
+        
+        if($note === null ){
+            self::$data[] = $dump;
+         }else {
+            self::$data[$note] = $dump;
+        }
+
+        return $this;
     }
 
     public function getData()
