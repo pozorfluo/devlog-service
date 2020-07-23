@@ -1,0 +1,16 @@
+<details open="true" class="text-light" style="position: fixed; bottom:36px; z-index:4096; padding: 0.25rem 2rem; font-size: 0.75rem; background-color:#222222;">
+	<summary>
+		DevLog
+	</summary>
+    {# {{ dump(devlog.getData()) }} #}
+	{% for key, variable in devlog.getData() %}
+		<details open="true"> 
+			<summary>
+				{{ key }}
+			</summary>
+			{{ variable|raw }}
+		</details>
+	{% endfor %}
+</details>
+
+{{ render(controller('App\\Controller\\DevController::dumpRoutes')) }}
