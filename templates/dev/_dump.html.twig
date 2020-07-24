@@ -1,14 +1,59 @@
-<details open="true" class="text-light" style="position: fixed; bottom:36px; z-index:4096; padding: 0.25rem 2rem; font-size: 0.75rem; background-color:#222222;">
-	<summary>
-		DevLog
-	</summary>
-    {# {{ dump(devlog.getData()) }} #}
-	{% for key, variable in devlog.getData() %}
-		<details open="true"> 
-			<summary>
-				{{ key }}
-			</summary>
-			{{ variable|raw }}
-		</details>
-	{% endfor %}
+<style>
+  .devlog {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: 12px Menlo, Monaco, Consolas, monospace;
+    vertical-align: baseline;
+    line-height: 1;
+    quotes: none;
+    list-style: none;
+    border-spacing: 0;
+    background-color: transparent;
+    color: white;
+    z-index: 4096;
+  }
+  .devlog-details {
+    font-size: 10px;
+  }
+
+  .devlog-summary {
+    padding: 0.25rem 1rem;
+    background:  #4f805d7f; /*#22222282;*/
+    border-radius: 0px;
+  }
+  .devlog-summary::before {
+    content: "#";
+  }
+
+  .devlog-tab {
+    position: fixed;
+    bottom: 36px;
+    padding: 0.25rem 1rem;
+    background:  #22222282;
+  }
+
+  .devlog .sf-dump {
+    border: 0;
+    background:  #222222ea;
+  }
+
+</style>
+<details
+  open="true"
+  class="devlog devlog-tab"
+>
+  <summary class="devlog">
+    devlog
+  </summary>
+  {# {{ dump(devlog.getData()) }} #} {% for key, variable in devlog.getData() %}
+  <details open="true" class="devlog">
+    <summary class="devlog devlog-summary">
+      {{ key }}
+    </summary>
+    {{ variable | raw }}
+  </details>
+  {% endfor %}
 </details>
+
+{{ render(controller("App\\Controller\\DevController::dumpRoutes")) }}
